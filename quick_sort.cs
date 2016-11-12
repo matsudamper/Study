@@ -23,7 +23,7 @@ class Program
             {
                 // 末尾から～先頭まで
                 // 先頭まで小さいものがなかった時に入れ替えない対策
-                while (minIndex > start)
+                while (minIndex >= maxIndex)
                 {
                     // 基準数より小さい数の場所で抜ける
                     if (data[minIndex] < pivot) break;
