@@ -3,11 +3,11 @@ class MutablePairMap<K1, K2, V> {
 
     fun put(key1: K1, key2: K2, value: V): V? {
         val secondMap: MutableMap<K2, V> = map[key1] ?: mutableMapOf()
-        val before = secondMap.put(key2, value)
+        val oldValue = secondMap.put(key2, value)
 
         map.put(key1, secondMap)
 
-        return before
+        return oldValue
     }
 
     fun get(key1: K1, key2: K2): V? = map.get(key1)?.get(key2)
