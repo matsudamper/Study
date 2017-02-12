@@ -26,34 +26,33 @@ class MutablePairMap<K1, K2, V> {
 
     fun iterator() = MutablePairMapIterator(map)
 
-}
+    class MutablePairMapIterator<K1, K2, V>(pairMap: MutableMap<K1, MutableMap<K2, V>>) : Iterator<Triple<K1, K2, V>> {
 
-class MutablePairMapIterator<K1, K2, V>(pairMap: MutableMap<K1, MutableMap<K2, V>>) : Iterator<Triple<K1, K2, V>> {
+        val firstIterator = pairMap.iterator()
+        var firstMap: MutableMap.MutableEntry<K1, MutableMap<K2, V>>? = null
 
-    val firstIterator = pairMap.iterator()
-    var firstMap: MutableMap.MutableEntry<K1, MutableMap<K2, V>>? = null
+        var secondIterator: MutableIterator<MutableMap.MutableEntry<K2, V>>? = null
 
-    var secondIterator: MutableIterator<MutableMap.MutableEntry<K2, V>>? = null
-
-    init {
-        if (firstIterator.hasNext()) {
-            firstMap = firstIterator.next()
-            secondIterator = firstMap!!.value.iterator()
+        init {
+            if (firstIterator.hasNext()) {
+                firstMap = firstIterator.next()
+                secondIterator = firstMap!!.value.iterator()
+            }
         }
-    }
 
-    override fun hasNext(): Boolean {
-        return firstIterator.hasNext() || secondIterator?.hasNext() ?: false
-    }
-
-    override fun next(): Triple<K1, K2, V> {
-
-        if (!secondIterator!!.hasNext()) {
-            firstMap = firstIterator.next()
-            secondIterator = firstMap!!.value.iterator()
+        override fun hasNext(): Boolean {
+            return firstIterator.hasNext() || secondIterator?.hasNext() ?: false
         }
-        val secondMap = secondIterator!!.next()
 
-        return Triple(firstMap!!.key, secondMap.key, secondMap.value)
+        override fun next(): Triple<K1, K2, V> {
+
+            if (!secondIterator!!.hasNext()) {
+                firstMap = firstIterator.next()
+                secondIterator = firstMap!!.value.iterator()
+            }
+            val secondMap = secondIterator!!.next()
+
+            return Triple(firstMap!!.key, secondMap.key, secondMap.value)
+        }
     }
 }
