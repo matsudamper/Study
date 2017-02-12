@@ -24,7 +24,7 @@ class MutablePairMap<K1, K2, V> {
         return result.toString()
     }
 
-    fun iterator(): Iterator<Triple<K1, K2, V>> = MutablePairMapIterator(map)
+    fun iterator() = MutablePairMapIterator(map)
 
 }
 
