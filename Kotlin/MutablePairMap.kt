@@ -1,4 +1,4 @@
-class MutablePairMap<K1, K2, V> {
+class MutablePairMap<K1, K2, V> : Iterable<Triple<K1, K2, V>> {
     private val map: MutableMap<K1, MutableMap<K2, V>> = mutableMapOf()
 
     fun put(key1: K1, key2: K2, value: V): V? {
@@ -24,7 +24,7 @@ class MutablePairMap<K1, K2, V> {
         return result.toString()
     }
 
-    fun iterator() = MutablePairMapIterator(map)
+    override fun iterator() = MutablePairMapIterator(map)
 
     class MutablePairMapIterator<K1, K2, V>(pairMap: MutableMap<K1, MutableMap<K2, V>>) : Iterator<Triple<K1, K2, V>> {
 
